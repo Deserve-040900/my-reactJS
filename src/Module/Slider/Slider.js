@@ -1,6 +1,6 @@
 import React from 'react';
 
-const slider = () => {
+const Slider = () => {
     return (
         <div className="slider">
         <div className="callbacks_container">
@@ -38,4 +38,4 @@ const slider = () => {
     );
 };
 
-export default slider;
+export default Slider;

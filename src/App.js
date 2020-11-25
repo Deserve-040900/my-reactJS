@@ -1,42 +1,52 @@
 import logo from './logo.svg';
 import './App.css';
 
-import TopBanner from './modules/Topbanner/topbanner';
-import Slider from './modules/Slider/slider';
-import Content from './modules/Content/content';
-import Lastest from './modules/Lastest/lastest';
-import Poster from './modules/Poster/poster';
-import Xbox from './modules/Xbox/xbox';
-import Footer from './modules/Footer/footer';
-import Contact from './modules/Contact/contact';
+import TopBanner from './Module/TopBanner/TopBanner';
+import Slider from './Module/Slider/Slider';
+import Content from './Module/Content/Content';
+import Lastest from './Module/Lastest/Lastest';
+import Poster from './Module/Poster/Poster';
+import Xbox from './Module/Xbox/Xbox';
+import Footer from './Module/Footer/Footer';
+import Contact from './Module/Contact/Contact';
 import { useState } from 'react';
 
+
 function App() {
-  let xyz = 'ahihi';
+  let abc = 'Chào các bạn';
+
   const[load_top_banner, SetLoadTopBanner] = useState(true);
+
 
   const handleUnMountTopBanner = () => {
     SetLoadTopBanner(false);
   }
+
   return (
     <>
-    {
-      (load_top_banner) ? <TopBanner title_page = {"Boylove "+"Store "+Math.round(Math.random()*100)} delete_me={handleUnMountTopBanner}/> : null
-    }
-    
-    <Slider/>
+      
+      {
+        (load_top_banner)?
+        <TopBanner title_page={"Hung " + "Store " + Math.round(Math.random() * 100)} delete_me={handleUnMountTopBanner} />
+        :
+        null
+      }
 
-    <Content/>
+      <Slider />
 
-    <Lastest/>
+      <Content />
+      
+      <Lastest />
+      
+      <Poster />
+      
+      <Xbox />
 
-    <Poster/>
+      <Contact />
+      
+      <Footer />
 
-    <Xbox/>
-
-    <Contact/>
-
-    <Footer/>
+      
 
     </>
   );

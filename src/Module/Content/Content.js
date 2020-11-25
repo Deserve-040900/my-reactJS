@@ -1,6 +1,6 @@
 import React from 'react';
 
-const content = () => {
+const Content = () => {
     return (
         <div className="content">
         <div className="container">
@@ -38,11 +38,13 @@ const content = () => {
                   <img src="images/t2.jpg" className="img-responsive" alt="" />
                 </div>
               </li>
-            </ul>            
+            </ul>
+
+            
           </div>
         </div>
       </div>
     );
 };
 
-export default content;
+export default Content;

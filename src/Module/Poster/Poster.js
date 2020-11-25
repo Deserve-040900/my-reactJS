@@ -1,6 +1,6 @@
 import React from 'react';
 
-const poster = () => {
+const Poster = () => {
     return (
         <div className="poster">
             <div className="container">
@@ -17,4 +17,4 @@ const poster = () => {
     );
 };
 
-export default poster;
+export default Poster;

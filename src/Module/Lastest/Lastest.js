@@ -1,6 +1,6 @@
 import React from 'react';
 
-const lastest = () => {
+const Lastest = () => {
     return (
         <div className="latest">
             <div className="container">
@@ -52,4 +52,4 @@ const lastest = () => {
     );
 };
 
-export default lastest;
+export default Lastest;
