@@ -17,6 +17,20 @@ div.error {
   color: #f00;
   
 }
+.carousel-inner img {
+  width: 100%;
+}
+.button_gio_hang {
+  top: 18px;
+  position: fixed;
+  right: 0;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 10px 0 0 10px;
+  box-shadow: 0 5px 10px #000;
+  cursor: pointer;
+  background: #fff;
+}
 @font-face {
    font-family: 'OpenSans-Regular';
    src: url(../fonts/OpenSans-Regular.ttf)format('truetype');
@@ -130,6 +144,9 @@ background-position:-180px -9px;
   font-size: 20px;
 }
 .contact_form input::placeholder, .contact_form textarea::placeholder {
+  color: #555!important;
+}
+.login_form input::placeholder, .login_form textarea::placeholder {
   color: #555!important;
 }
 .headr-right {

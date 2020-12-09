@@ -2,6 +2,15 @@ import LogoBanner from './LogoBanner';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import {
+  Link,
+  withRouter
+} from 'react-router-dom';
+
+import ItemMenu from './ItemMenu';
+
+import $ from 'jquery';
+
 class TopBanner extends Component {
 
   constructor(props){
@@ -10,11 +19,39 @@ class TopBanner extends Component {
       title_logo: this.props.title_page + ' test xem sao',
       count: 1,
       interval: null,
-      search: ''
+      search: '',
+      thong_tin_user: {
+        name: '',
+        tai_khoan: '',
+        mat_khau: ''
+      },
+      message_error: {
+        general_error: ''
+      },
+      menu_list: [
+        {
+          title: 'Trang chủ',
+          link: '/'
+        },
+        {
+          title: 'Giới thiệu',
+          link: '/gioi-thieu'
+        },
+        {
+          title: 'Chi tiết',
+          link: '/chi-tiet'
+        },
+        {
+          title: 'Liên hệ',
+          link: '/lien-he'
+        }
+      ]
     };
 
     this.handleChangeInput = this.handleChangeInput.bind(this);
     this.handleSearchfunction = this.handleSearchfunction.bind(this);
+    this.handleChangeInputLoginForm = this.handleChangeInputLoginForm.bind(this);
+    this.handleSubmitLoginForm = this.handleSubmitLoginForm.bind(this);
   }
 
   updateCount(){
@@ -24,6 +61,26 @@ class TopBanner extends Component {
   }
 
   componentDidMount(){
+
+    
+
+    var thong_tin_user_save = localStorage.getItem('thong_tin_user');
+
+    //console.log(JSON.parse(thong_tin_user_save));
+
+    if(typeof thong_tin_user_save != 'undefined' && thong_tin_user_save != null){
+      thong_tin_user_save = JSON.parse(thong_tin_user_save);
+
+      if(thong_tin_user_save.tai_khoan){
+        this.setState({
+          thong_tin_user: thong_tin_user_save
+        }, () => {
+          console.log(this.state.thong_tin_user);
+        })
+      }
+
+    }
+
     // this.setState({
     //   interval: setInterval(() => {
     //     this.updateCount();
@@ -37,6 +94,8 @@ class TopBanner extends Component {
     // if(this.state.count == 3){
     //   this.props.delete_me();
     // }
+
+    console.log(this.props.location.pathname);
   }
 
   componentWillUnmount(){
@@ -54,6 +113,52 @@ class TopBanner extends Component {
 
   handleSearchfunction = () => {
     console.log(this.state.search);
+  }
+
+
+  handleChangeInputLoginForm = (e) => {
+    var thong_tin_user_temp = {...this.state.thong_tin_user};
+
+    thong_tin_user_temp[e.target.name] = e.target.value;
+
+    this.setState({
+      thong_tin_user: thong_tin_user_temp
+    }, () => {
+      //console.log(this.state);
+    })
+  }
+
+  handleSubmitLoginForm = (e) => {
+    e.preventDefault();
+
+    if(this.state.thong_tin_user.tai_khoan == 'hungnguyen' && this.state.thong_tin_user.mat_khau == '123456'){
+      console.log('Đăng nhập thành công');
+      var thong_tin_user_temp = {...this.state.thong_tin_user};
+
+      thong_tin_user_temp.name = 'Hùng Nguyễn';
+
+      this.setState({
+        thong_tin_user: thong_tin_user_temp
+      }, () => {
+
+        console.log(this.state);
+
+        thong_tin_user_temp.mat_khau = '';
+
+        localStorage.setItem('thong_tin_user', JSON.stringify(thong_tin_user_temp));
+
+        $('#modal-id').hide();
+        $('.modal-backdrop').hide();
+        $('body').removeClass('modal-open');
+      });
+    }
+    else{
+      this.setState({
+        message_error: {
+          general_error: 'Tài khoản hoặc Mật khẩu không chính xác'
+        }
+      })
+    }
   }
 
   render() {
@@ -97,23 +202,83 @@ class TopBanner extends Component {
             <div className="top-menu">
               <span className="menu"></span>
               <ul className="nav1">
-                <li className="active"><a href="index.html">Home</a></li>
-                <li><a href="about.html">{this.state.count}</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="typo.html">News</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Mail</a></li>
+                {
+                  this.state.menu_list.map((item_menu, index) => 
+                    {
+
+                      // var class_active = '';
+
+                      // if(index == 0){
+                      //   class_active = 'active';
+                      // }
+
+                      // return <li className={class_active}><a href={item_menu.link}>{item_menu.title}</a></li>
+
+
+                      if(item_menu.link == this.props.location.pathname){
+                        return <ItemMenu item_menu={item_menu} index={index} class_name={'active'} />
+                      }
+                      else{
+                        return <ItemMenu item_menu={item_menu} index={index} class_name={''} />
+                      }
+
+                      
+
+                    }
+                  )
+                }
+                {
+                  (this.state.thong_tin_user.name != '')?
+                  <li><a href="">{this.state.thong_tin_user.name}</a></li>
+                  :
+                  <li><a href="" class="btn btn-primary" data-toggle="modal" href='#modal-id'>Đăng nhập</a></li>
+                }
               </ul>
             </div>
 
             <div className="clearfix"></div>
           </div>
         </div>
+
+        
+        <div className="modal fade" id="modal-id">
+
+          <form className="login_form" action="" method="POST" onSubmit={this.handleSubmitLoginForm}>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 className="modal-title">Đăng Nhập</h4>
+                </div>
+                <div className="modal-body">
+                  <div className="error">
+                    {this.state.message_error.general_error}
+                  </div>
+                  <div>
+                    <input type="text" onChange={this.handleChangeInputLoginForm} placeholder="Tài Khoản" 
+                    name="tai_khoan" id="tai_khoan" className="form-control" defaultValue="" 
+                    value={this.state.thong_tin_user.tai_khoan} />
+                  </div>
+                  <div>
+                    <input type="password" onChange={this.handleChangeInputLoginForm} placeholder="Mật khẩu" 
+                    name="mat_khau" id="mat_khau" className="form-control" defaultValue="" 
+                    value={this.state.thong_tin_user.mat_khau} />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" className="btn btn-primary">Login</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+        
       </div>
     );
   }
 
 }
 
-export default TopBanner;
+export default withRouter(TopBanner);

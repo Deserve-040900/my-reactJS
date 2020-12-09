@@ -2,14 +2,23 @@ import logo from './logo.svg';
 import './App.css';
 
 import TopBanner from './Module/TopBanner/TopBanner';
-import Slider from './Module/Slider/Slider';
-import Content from './Module/Content/Content';
-import Lastest from './Module/Lastest/Lastest';
-import Poster from './Module/Poster/Poster';
-import Xbox from './Module/Xbox/Xbox';
+
+import TrangChu from './pages/trangchu';
+import TrangChiTietSanPham from './pages/trangchitietsanpham';
+import TrangLienHe from './pages/tranglienhe';
+import TrangGioHang from './pages/tranggiohang';
+
 import Footer from './Module/Footer/Footer';
-import Contact from './Module/Contact/Contact';
+
+import ButtonGoToGioHang from './Module/buttongiohang/index';
+
 import { useState } from 'react';
+import {
+  Link,
+  Route,
+  BrowserRouter as Router,
+  Switch
+} from 'react-router-dom';
 
 
 function App() {
@@ -24,29 +33,41 @@ function App() {
 
   return (
     <>
+      <Router>
       
       {
         (load_top_banner)?
         <TopBanner title_page={"Hung " + "Store " + Math.round(Math.random() * 100)} delete_me={handleUnMountTopBanner} />
-        :
+         :
         null
       }
 
-      <Slider />
+      
+        
+        <Switch>
 
-      <Content />
-      
-      <Lastest />
-      
-      <Poster />
-      
-      <Xbox />
+          <Route path='/chi-tiet/:id_san_pham'>
+            <TrangChiTietSanPham />
+          </Route>
 
-      <Contact />
+          <Route path='/lien-he'>
+            <TrangLienHe />
+          </Route>
+
+          <Route path='/gio-hang'>
+            <TrangGioHang />
+          </Route>
+
+          <Route path='/'>
+            <TrangChu />
+          </Route>
+        </Switch>
+
       
+      <ButtonGoToGioHang />
       <Footer />
 
-      
+      </Router>
 
     </>
   );
