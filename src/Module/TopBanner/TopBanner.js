@@ -10,13 +10,15 @@ import {
 import ItemMenu from './ItemMenu';
 
 import $ from 'jquery';
+import { Button, ButtonGroup } from '@material-ui/core';
+import { DeleteIcon,EditOutlinedIcon } from '@material-ui/icons/';
 
 class TopBanner extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      title_logo: this.props.title_page + ' test xem sao',
+      title_logo: this.props.title_page + ' demo website',
       count: 1,
       interval: null,
       search: '',
@@ -61,9 +63,6 @@ class TopBanner extends Component {
   }
 
   componentDidMount(){
-
-    
-
     var thong_tin_user_save = localStorage.getItem('thong_tin_user');
 
     //console.log(JSON.parse(thong_tin_user_save));
@@ -78,7 +77,6 @@ class TopBanner extends Component {
           console.log(this.state.thong_tin_user);
         })
       }
-
     }
 
     // this.setState({
@@ -214,16 +212,12 @@ class TopBanner extends Component {
 
                       // return <li className={class_active}><a href={item_menu.link}>{item_menu.title}</a></li>
 
-
                       if(item_menu.link == this.props.location.pathname){
                         return <ItemMenu item_menu={item_menu} index={index} class_name={'active'} />
                       }
                       else{
                         return <ItemMenu item_menu={item_menu} index={index} class_name={''} />
                       }
-
-                      
-
                     }
                   )
                 }
@@ -231,7 +225,11 @@ class TopBanner extends Component {
                   (this.state.thong_tin_user.name != '')?
                   <li><a href="">{this.state.thong_tin_user.name}</a></li>
                   :
-                  <li><a href="" class="btn btn-primary" data-toggle="modal" href='#modal-id'>Đăng nhập</a></li>
+                  <li><a href="" data-toggle="modal" href='#modal-id'>
+                    <Button variant="contained" color="secondary">
+                      Đăng nhập
+                    </Button>
+                  </a></li>
                 }
               </ul>
             </div>
@@ -266,19 +264,23 @@ class TopBanner extends Component {
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="submit" className="btn btn-primary">Login</button>
+                  <ButtonGroup aria-label="contained primary button group">
+                    <Button variant="contained" style={{background: '#009900'}} size="email" color="default" data-dismiss="modal">
+                      <EditOutlinedIcon/>
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={this.handleSubmitLoginForm}>
+                      <DeleteIcon/>
+                    </Button>
+                  </ButtonGroup>
                 </div>
               </div>
             </div>
           </form>
 
-        </div>
-        
+        </div>        
       </div>
     );
   }
-
 }
 
 export default withRouter(TopBanner);

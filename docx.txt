@@ -1,0 +1,7 @@
+component dai dien cho 1 thanh phan nho dc chia ra trong react
+2 bien chinh cua react la props va state
+npx create-react-app <project name>
+npm install -g node-sass
+npm install --save jquery
+npm install --save react-router-dom
+npm install --save @material-ui/core
